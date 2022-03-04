@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import styled from "@emotion/styled";
 
+// Label del formulario
 const Label = styled.label`
   color: #fff;
   display: block;
@@ -10,6 +11,7 @@ const Label = styled.label`
   margin: 15px 0;
 `;
 
+// Select del formulario
 const Select = styled.select`
   width: 100%;
   font-size: 18px;
@@ -17,8 +19,12 @@ const Select = styled.select`
   border-radius: 10px;
 `;
 
+// Hook useSelectMonedas (recibe 2 argumentos)
 const useSelectMonedas = (label, opciones) => {
+  // State para SelectMonedas
   const [state, setState] = useState("");
+
+  // Funcion que crea el Hook SelectMonedas y retorna 2 valores [state,SelectMonedas]
   const SelectMonedas = () => (
     <>
       <Label>{label}</Label>
