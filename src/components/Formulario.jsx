@@ -29,11 +29,17 @@ const InputSubmit = styled.input`
 `;
 
 const Formulario = () => {
-  // Extrae moneda y selectMonedas del Hook useSelectMonedas
-  const [moneda, SelectMonedas] = useSelectMonedas("Elige tu moneda", monedas);
-
   // State para criptomonedas
   const [criptos, setCriptos] = useState([]);
+
+  // Hook para moneda
+  const [moneda, SelectMonedas] = useSelectMonedas("Elige tu moneda", monedas);
+
+  // Hook para criptomoneda
+  const [criptoMoneda, SelectCriptoMonedas] = useSelectMonedas(
+    "Elige tu criptomoneda",
+    criptos
+  );
 
   // Funcion para consultar API:
   const consultarAPI = async () => {
@@ -64,8 +70,8 @@ const Formulario = () => {
 
   return (
     <form>
-      {moneda}
       <SelectMonedas />
+      <SelectCriptoMonedas />
       <InputSubmit type="submit" value="Cotizar"></InputSubmit>
     </form>
   );

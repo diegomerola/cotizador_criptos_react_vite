@@ -38,7 +38,7 @@ const useSelectMonedas = (label, opciones) => {
       </Select>
     </>
   );
-  return [state, SelectMonedas];
+  return [state, SelectMonedas]; // Devuelve moneda seleccionada, componente SelectMonedas
 };
 
 export default useSelectMonedas;
