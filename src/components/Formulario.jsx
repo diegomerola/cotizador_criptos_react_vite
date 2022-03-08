@@ -1,16 +1,18 @@
+// Importar React
 import { React, useState, useEffect } from "react";
+
 // Importar estilos
 import styled from "@emotion/styled";
 
-// Importar Hook
+// Importar Hook - Componentes
 import useSelectMonedas from "../hooks/useSelectMonedas";
+import Error from "./Error";
 
 // Importar arreglo de monedas
 import { monedas } from "../data/monedas";
 
 // Input del formulario
 const InputSubmit = styled.input`
-  font-family: "Lato", sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #fff;
@@ -29,6 +31,9 @@ const InputSubmit = styled.input`
 `;
 
 const Formulario = () => {
+  // State para error
+  const [error, setError] = useState(false);
+
   // State para criptomonedas
   const [criptos, setCriptos] = useState([]);
 
@@ -68,12 +73,35 @@ const Formulario = () => {
     consultarAPI();
   }, []);
 
+  // Funcion para handleSubmit
+  const handleSubmit = (e) => {
+    // Detener submit
+    e.preventDefault();
+
+    // Validar
+    if (moneda === "" || criptoMoneda === "") {
+      // Si existe un error:
+      setError(true);
+
+      // Eliminar msj de error dsp de 2 segundos
+      setTimeout(() => {
+        setError(false);
+      }, 2000);
+      return;
+    }
+    // Sino hay error:
+    setError(false);
+  };
+
   return (
-    <form>
-      <SelectMonedas />
-      <SelectCriptoMonedas />
-      <InputSubmit type="submit" value="Cotizar"></InputSubmit>
-    </form>
+    <>
+      {error ? <Error msj={"Todos los campos son obligatorios"} /> : null}
+      <form onSubmit={handleSubmit}>
+        <SelectMonedas />
+        <SelectCriptoMonedas />
+        <InputSubmit type="submit" value="Cotizar"></InputSubmit>
+      </form>
+    </>
   );
 };
 
