@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import imageCripto from "./img/imagen-criptos.png";
 import Formulario from "./components/Formulario";
@@ -40,13 +41,45 @@ const Heading = styled.h1`
 `;
 
 function App() {
+  // State para resultado de la consulta a la API:
+  const [resultado, setResultado] = useState([]);
+
+  // State para monedas seleccionadas:
+  const [monedas, setMonedas] = useState({});
+
+  // useEffect escuchando cambios en monedas seleccionadas:
+  useEffect(() => {
+    // Si monedas no esta vacio:
+    if (Object.keys(monedas).length > 0) {
+      // Consultar a la API:
+      consultarAPI();
+      console.log("Consultando api...");
+    }
+  }, [monedas]);
+
+  // Funcion para consultar API
+  const consultarAPI = async () => {
+    // Destructuring de monedas
+    const { moneda, criptoMoneda } = monedas;
+
+    // Obtener URL
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptoMoneda}&tsyms=${moneda}`;
+
+    // Hacer consulta
+    const respuesta = await fetch(url);
+    const resultado = await respuesta.json();
+
+    // Pasar resultado al state
+    setResultado(resultado.DISPLAY[criptoMoneda][moneda]);
+  };
+
   return (
     <div>
       <Contenedor>
         <Imagen src={imageCripto} alt="Imagen Criptomonedas" />
         <div>
           <Heading>Cotiza Criptomonedas al instante</Heading>
-          <Formulario />
+          <Formulario setMonedas={setMonedas} />
         </div>
       </Contenedor>
     </div>

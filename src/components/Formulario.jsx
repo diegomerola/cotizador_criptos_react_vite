@@ -30,7 +30,7 @@ const InputSubmit = styled.input`
   }
 `;
 
-const Formulario = () => {
+const Formulario = ({ setMonedas }) => {
   // State para error
   const [error, setError] = useState(false);
 
@@ -82,15 +82,13 @@ const Formulario = () => {
     if (moneda === "" || criptoMoneda === "") {
       // Si existe un error:
       setError(true);
-
-      // Eliminar msj de error dsp de 2 segundos
-      setTimeout(() => {
-        setError(false);
-      }, 2000);
       return;
     }
     // Sino hay error:
     setError(false);
+
+    // Crear objeto con las 2 monedas seleccionadas
+    setMonedas({ moneda, criptoMoneda });
   };
 
   return (
