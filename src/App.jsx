@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import imageCripto from "./img/imagen-criptos.png";
 import Formulario from "./components/Formulario";
+import Resultado from "./components/Resultado";
 
 const Contenedor = styled.div`
   margin: 0 auto;
@@ -44,7 +45,7 @@ function App() {
   // State para resultado de la consulta a la API:
   const [resultado, setResultado] = useState([]);
 
-  // State para monedas seleccionadas:
+  // State para monedas seleccionadas por el usuario (moneda y criptoMoneda):
   const [monedas, setMonedas] = useState({});
 
   // useEffect escuchando cambios en monedas seleccionadas:
@@ -80,6 +81,7 @@ function App() {
         <div>
           <Heading>Cotiza Criptomonedas al instante</Heading>
           <Formulario setMonedas={setMonedas} />
+          {resultado.PRICE ? <Resultado resultado={resultado} /> : null}
         </div>
       </Contenedor>
     </div>

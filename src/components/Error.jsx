@@ -12,11 +12,7 @@ const MsjError = styled.p`
 `;
 
 const Error = ({ msj }) => {
-  return (
-    <>
-      <MsjError>{msj}</MsjError>
-    </>
-  );
+  return <MsjError>{msj}</MsjError>;
 };
 
 export default Error;
