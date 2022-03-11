@@ -5,8 +5,9 @@ const Contenedor = styled.div`
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-top: 30px;
+  justify-content: center;
 `;
 
 const Texto = styled.p`

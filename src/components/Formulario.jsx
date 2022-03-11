@@ -30,7 +30,7 @@ const InputSubmit = styled.input`
   }
 `;
 
-const Formulario = ({ setMonedas }) => {
+const Formulario = ({ setMonedas, setResultado }) => {
   // State para error
   const [error, setError] = useState(false);
 
@@ -82,6 +82,9 @@ const Formulario = ({ setMonedas }) => {
     if (moneda === "" || criptoMoneda === "") {
       // Si existe un error:
       setError(true);
+
+      // Limpiar arreglo de monedas
+      setResultado([]);
       return;
     }
     // Sino hay error:

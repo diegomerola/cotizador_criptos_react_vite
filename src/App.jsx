@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import imageCripto from "./img/imagen-criptos.png";
 import Formulario from "./components/Formulario";
 import Resultado from "./components/Resultado";
+import Spinner from "./components/Spinner";
 
 const Contenedor = styled.div`
   margin: 0 auto;
@@ -42,6 +43,9 @@ const Heading = styled.h1`
 `;
 
 function App() {
+  // State para spinner
+  const [spinner, setSpinner] = useState(false);
+
   // State para resultado de la consulta a la API:
   const [resultado, setResultado] = useState([]);
 
@@ -54,7 +58,6 @@ function App() {
     if (Object.keys(monedas).length > 0) {
       // Consultar a la API:
       consultarAPI();
-      console.log("Consultando api...");
     }
   }, [monedas]);
 
@@ -62,6 +65,12 @@ function App() {
   const consultarAPI = async () => {
     // Destructuring de monedas
     const { moneda, criptoMoneda } = monedas;
+
+    // Limpiar monedas
+    setMonedas({});
+
+    // Activar spinner
+    setSpinner(true);
 
     // Obtener URL
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptoMoneda}&tsyms=${moneda}`;
@@ -72,6 +81,9 @@ function App() {
 
     // Pasar resultado al state
     setResultado(resultado.DISPLAY[criptoMoneda][moneda]);
+
+    // Desactivar Spinner
+    setSpinner(false);
   };
 
   return (
@@ -80,7 +92,8 @@ function App() {
         <Imagen src={imageCripto} alt="Imagen Criptomonedas" />
         <div>
           <Heading>Cotiza Criptomonedas al instante</Heading>
-          <Formulario setMonedas={setMonedas} />
+          <Formulario setMonedas={setMonedas} setResultado={setResultado} />
+          {spinner ? <Spinner /> : null}
           {resultado.PRICE ? <Resultado resultado={resultado} /> : null}
         </div>
       </Contenedor>
